@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements IRecognizerListen
         initPermission();
         IflySpeechManager.getInstance().initStart(this);
         IflySpeechManager.getInstance().setRecognizerListener(this);
-//        IflySpeechManager.getInstance().setSpeakListener(this);
+        IflySpeechManager.getInstance().setSpeakListener(this); //全局
     }
 
     private void initPermission() {
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements IRecognizerListen
     public void start(View view) {
 
         IflySpeechManager.getInstance().startSpeak("你叫什么名字");
-
 
         /*if (isRec) {
             isRec = false;
