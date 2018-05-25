@@ -1,1 +1,1 @@
-include ':app', ':iflylib'
+include ':app', ':iflylib', ':baidulib'

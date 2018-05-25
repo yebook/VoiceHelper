@@ -3,22 +3,18 @@ package com.huimin.voicedemo;
 import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.huimin.iflylib.IflySpeechManager;
-import com.huimin.iflylib.Logger;
-import com.huimin.iflylib.RecognizerHelper;
-import com.huimin.iflylib.TtsHelper;
-import com.huimin.iflylib.listener.IRecognizerListener;
-import com.huimin.iflylib.listener.ISpeakLisstener;
-import com.huimin.iflylib.listener.SpeakListener;
-import com.iflytek.cloud.thirdparty.I;
-import com.iflytek.cloud.thirdparty.L;
+import com.huimin.baidulib.BaiduSpeechManager;
+import com.huimin.baidulib.Logger;
+import com.huimin.baidulib.listener.IRecogListener;
+import com.huimin.baidulib.listener.ISpeakListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-public class MainActivity extends AppCompatActivity implements IRecognizerListener, ISpeakLisstener {
-
+public class MainActivity extends AppCompatActivity implements IRecogListener, ISpeakListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private boolean isRec;
 
     @Override
@@ -26,17 +22,37 @@ public class MainActivity extends AppCompatActivity implements IRecognizerListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initPermission();
-        IflySpeechManager.getInstance().initStart(this);
+        BaiduSpeechManager.getInstance().init(this);
+
+//        BaiduSpeechManager.getInstance().setRecogListener(this);
+        BaiduSpeechManager.getInstance().setSpeakListener(this);
+       /* IflySpeechManager.getInstance().initStart(this);
         IflySpeechManager.getInstance().setRecognizerListener(this);
-        IflySpeechManager.getInstance().setSpeakListener(this); //全局
+        IflySpeechManager.getInstance().setSpeakListener(this); //全局*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        BaiduSpeechManager.getInstance().startRecog();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        BaiduSpeechManager.getInstance().stopRecog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BaiduSpeechManager.getInstance().destory();
     }
 
     private void initPermission() {
         new RxPermissions(this).request(Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.ACCESS_NETWORK_STATE)
+                Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_NETWORK_STATE)
                 .subscribe(granted -> {
                     if (granted) {
 //                        Toast.makeText(this, "获取权限成功", Toast.LENGTH_SHORT).show();
@@ -48,66 +64,44 @@ public class MainActivity extends AppCompatActivity implements IRecognizerListen
     }
 
     public void start(View view) {
+        if (!BaiduSpeechManager.getInstance().isSpeaking()) {
+            BaiduSpeechManager.getInstance().startSpeak("你叫什么名字");
+        }
 
-        IflySpeechManager.getInstance().startSpeak("你叫什么名字");
-
-        /*if (isRec) {
-            isRec = false;
-            IflySpeechManager.getInstance().stopReco();
-        } else {
-            isRec = true;
-            IflySpeechManager.getInstance().startReco();
-        }*/
     }
 
 
     public void start1(View view) {
-        IflySpeechManager.getInstance().startSpeak("今天星期几", new ISpeakLisstener() {
-            @Override
-            public void onSpeakBegin(String text) {
-                Logger.error("====speak: onSpeakBegin1111  " + text);
-            }
-
-            @Override
-            public void onSpeakOver(String msg) {
-                Logger.error("====speak: onSpeakOver11111 / " + msg);
-            }
-
-            @Override
-            public void onInterrupted() {
-                Logger.error("====speak: onInterrupted1111");
-            }
-        });
+        BaiduSpeechManager.getInstance().startSpeak("你叫什么名字", true);
     }
-
 
     @Override
     public void onVolumeChanged(int volume) {
-
+        Log.e(TAG, "onVolumeChanged: " + volume);
     }
 
     @Override
     public void onResult(String result) {
-
+        Log.e(TAG, "onResult: " + result);
     }
 
     @Override
     public void onError(String msg) {
-
+        Log.e(TAG, "onError: " + msg);
     }
 
     @Override
     public void onSpeakBegin(String text) {
-        Logger.error("====speak: onSpeakBegin  " + text);
+        Log.e(TAG, "onSpeakBegin: " + text);
     }
 
     @Override
     public void onSpeakOver(String msg) {
-        Logger.error("====speak: onSpeakOver / " + msg);
+        Log.e(TAG, "onSpeakOver: " + msg);
     }
 
     @Override
     public void onInterrupted() {
-        Logger.error("====speak: onInterrupted");
+        Log.e(TAG, "onInterrupted: ");
     }
 }

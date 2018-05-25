@@ -11,7 +11,7 @@ import com.iflytek.cloud.SynthesizerListener;
  * Date: 2018/5/23 19:05
  * Desc:
  */
-public abstract class SpeakListener implements SynthesizerListener,ISpeakLisstener {
+public abstract class SpeakListener implements SynthesizerListener,ISpeakListener {
     @Override
     public void onSpeakBegin() {
         Logger.error("开始播放");

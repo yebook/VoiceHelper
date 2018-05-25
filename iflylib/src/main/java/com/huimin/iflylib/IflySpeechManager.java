@@ -3,11 +3,9 @@ package com.huimin.iflylib;
 import android.content.Context;
 
 import com.huimin.iflylib.listener.IRecognizerListener;
-import com.huimin.iflylib.listener.ISpeakLisstener;
+import com.huimin.iflylib.listener.ISpeakListener;
 import com.huimin.iflylib.listener.SpeakListener;
 import com.iflytek.cloud.SpeechUtility;
-import com.iflytek.cloud.SynthesizerListener;
-import com.iflytek.cloud.thirdparty.T;
 
 /**
  * Created by kermitye
@@ -60,7 +58,7 @@ public class IflySpeechManager {
 
     //======================语音合成=======================================
 
-    public void setSpeakListener(final ISpeakLisstener listener) {
+    public void setSpeakListener(final ISpeakListener listener) {
         TtsHelper.getInstance().setSpeakListener(new SpeakListener() {
             @Override
             public void onSpeakBegin(String text) {
@@ -79,7 +77,7 @@ public class IflySpeechManager {
         });
     }
 
-    public void startSpeak(String text, final ISpeakLisstener listener) {
+    public void startSpeak(String text, final ISpeakListener listener) {
         TtsHelper.getInstance().startSpeak(text, new SpeakListener() {
             @Override
             public void onSpeakBegin(String text) {

@@ -2,7 +2,6 @@ package com.huimin.voicedemo;
 
 import android.app.Application;
 
-import com.huimin.iflylib.IflySpeechManager;
 
 /**
  * Created by kermitye
@@ -14,6 +13,6 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        IflySpeechManager.getInstance().init(this);
+//        IflySpeechManager.getInstance().init(this);
     }
 }
