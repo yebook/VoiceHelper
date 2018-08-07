@@ -142,7 +142,6 @@ public class RecogHelper implements EventListener {
                     }
                 }
 
-
 //                    EventBus.getDefault().post(new MyEvents.ChatEvent(EventCodes.CHAT_SPEECH_RESULT, resultBean.best_result));
                 /*stop();
                 release();

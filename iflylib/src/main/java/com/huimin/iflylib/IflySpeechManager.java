@@ -28,7 +28,7 @@ public class IflySpeechManager {
 
 
     public void init(Context context) {
-        SpeechUtility.createUtility(context, "appid=5aeff60f");
+        SpeechUtility.createUtility(context, "appid=" + context.getString(R.string.appid));
     }
 
     public void initStart(Context context) {
@@ -100,10 +100,17 @@ public class IflySpeechManager {
         TtsHelper.getInstance().startSpeak(text);
     }
 
+    public boolean isSpeaking() {
+        return TtsHelper.getInstance().isSpeaking();
+    }
+
+    public void stopSpeak() {
+        TtsHelper.getInstance().stopSpeak();
+    }
+
     public void destorySpeak() {
         TtsHelper.getInstance().destory();
     }
-
 
 
     public void release() {

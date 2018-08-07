@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IflyLib</string>
+    <string name="appid">您的APPID</string>
 </resources>

@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+
+        <!--录音开关-->
+        <meta-data android:name="CONFIG_RECORD" android:value="true"/>
+    </application>
 </manifest>
